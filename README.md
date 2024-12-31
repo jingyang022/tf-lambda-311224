@@ -5,3 +5,4 @@
 <p>Step 1: Create DynamoDB table
 <br>Step 2: Create Lambda execution role
 <br>Step 3: Create Lambda function
+<br>Step 4: Create HTTP API using API Gateway
