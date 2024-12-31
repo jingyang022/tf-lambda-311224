@@ -3,4 +3,5 @@
 <p>AWS Services used: Lambda, API Gateway and DynamoDB.
 
 <p>Step 1: Create DynamoDB table
-<br>Step 2: Create Lambda Function
+<br>Step 2: Create Lambda execution role
+<br>Step 3: Create Lambda function
