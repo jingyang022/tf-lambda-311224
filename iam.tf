@@ -13,7 +13,7 @@ resource "aws_iam_policy" "yap_dynamoDB_access" {
                     "dynamodb:Scan"
                 ]
                 Effect   = "Allow"
-                Resource = data.aws_dynamodb_table.tableName.arn
+                Resource = aws_dynamodb_table.yap-dynamodb-table.arn
       },
     ]
   })

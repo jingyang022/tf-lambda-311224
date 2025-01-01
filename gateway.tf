@@ -7,35 +7,17 @@ resource "aws_apigatewayv2_api" "yap_api" {
   protocol_type = "HTTP"
 }
 
-/* resource "aws_apigatewayv2_stage" "lambda" {
-  api_id = aws_apigatewayv2_api.lambda.id
+resource "aws_apigatewayv2_stage" "lambda-stage" {
+  api_id = aws_apigatewayv2_api.yap_api.id
+  name   = "$default"
 
-  name        = "serverless_lambda_stage"
   auto_deploy = true
-
-  access_log_settings {
-    destination_arn = aws_cloudwatch_log_group.api_gw.arn
-
-    format = jsonencode({
-      requestId               = "$context.requestId"
-      sourceIp                = "$context.identity.sourceIp"
-      requestTime             = "$context.requestTime"
-      protocol                = "$context.protocol"
-      httpMethod              = "$context.httpMethod"
-      resourcePath            = "$context.resourcePath"
-      routeKey                = "$context.routeKey"
-      status                  = "$context.status"
-      responseLength          = "$context.responseLength"
-      integrationErrorMessage = "$context.integrationErrorMessage"
-      }
-    )
-  }
-} */
+}
 
 resource "aws_apigatewayv2_integration" "api_integration" {
   api_id = aws_apigatewayv2_api.yap_api.id
-  integration_type = "HTTP_PROXY"
-  integration_method = "ANY"
+  integration_type = "AWS_PROXY"
+  integration_method = "POST"
 
   integration_uri    = aws_lambda_function.func.invoke_arn
 }
@@ -67,5 +49,5 @@ resource "aws_lambda_permission" "api_gw" {
   function_name = aws_lambda_function.func.function_name
   principal     = "apigateway.amazonaws.com"
 
-  source_arn = "${aws_apigatewayv2_api.yap_api.execution_arn}/*/*"
+  source_arn = "${aws_apigatewayv2_api.yap_api.execution_arn}/*/*/topmovies"
 }
