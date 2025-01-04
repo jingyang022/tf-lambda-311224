@@ -84,3 +84,31 @@ resource "aws_cloudwatch_log_group" "api_gw_logs" {
   name              = "/aws/api_gw_logs/${aws_apigatewayv2_api.yap_api.name}"
   retention_in_days = 7
 }
+
+# Setup custom domain name for API Gateway endpoint
+resource "aws_api_gateway_domain_name" "api_gw_domain" {
+  domain_name              = "yap201224.sctp-sandbox.com"
+  regional_certificate_arn = aws_acm_certificate_validation.cert_validation.certificate_arn
+
+  endpoint_configuration {
+    types = ["REGIONAL"]
+  }
+}
+
+resource "aws_route53_record" "api_gw_record" {
+  name    = aws_api_gateway_domain_name.api_gw_domain.domain_name
+  type    = "A"
+  zone_id = data.aws_route53_zone.sctp_zone.id
+
+  alias {
+    evaluate_target_health = true
+    name                   = aws_api_gateway_domain_name.api_gw_domain.regional_domain_name
+    zone_id                = aws_api_gateway_domain_name.api_gw_domain.regional_zone_id
+  }
+}
+
+/* resource "aws_api_gateway_base_path_mapping" "api_gw_domain_mapping" {
+  api_id = "${aws_apigatewayv2_api.yap_api.id}"
+  stage_name  = "${aws_apigatewayv2_stage.lambda-stage.stage_name}"
+  domain_name = "${aws_api_gateway_domain_name.api_gw_domain.domain_name}"
+} */
