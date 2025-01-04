@@ -27,6 +27,6 @@ resource "aws_lambda_function" "func" {
 
 # aws_cloudwatch_log_group to get the logs of the Lambda execution.
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
- name              = "/aws/lambda/yap-moviesdb-api"
- retention_in_days = 14
+  name              = "/aws/lambda/yap-moviesdb-api"
+  retention_in_days = 7
 }
