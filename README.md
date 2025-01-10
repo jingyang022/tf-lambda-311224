@@ -7,3 +7,4 @@
 <br>Step 3: Create Lambda function
 <br>Step 4: Create HTTP API using API Gateway
 <br>Step 5: Create CloudWatch Log Metric Filter and Alarm (This is for assignment 2.16)
+<br>Step 6: Code tested correct as on 10 Jan 25

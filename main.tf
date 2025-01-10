@@ -11,7 +11,7 @@ data "archive_file" "lambda" {
 }
 
 resource "aws_lambda_function" "func" {
- function_name = "yap-topmovies-api"
+ function_name = "yap-topmovies-lambda"
  role          = aws_iam_role.lambda_exec_role.arn
  handler       = "lambda_function.lambda_handler"
  runtime       = "python3.8"
@@ -27,6 +27,6 @@ resource "aws_lambda_function" "func" {
 
 # aws_cloudwatch_log_group to get the logs of the Lambda execution.
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
-  name              = "/aws/lambda/yap-moviesdb-api"
+  name              = "/aws/lambda/yap-topmovies-lambda"
   retention_in_days = 7
 }

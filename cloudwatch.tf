@@ -21,7 +21,7 @@ resource "aws_cloudwatch_metric_alarm" "info_count_alarm" {
   period                    = 60
   statistic                 = "Sum"
   threshold                 = 10
-  #alarm_actions             = [aws_sns_topic.sns.arn]
+  alarm_actions             = [aws_sns_topic.yap_topic.arn]
   #alarm_description         = "This metric monitors ec2 cpu utilization"
   #insufficient_data_actions = []
 }
